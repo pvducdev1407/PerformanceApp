@@ -1,0 +1,58 @@
+[
+  {
+    "NoiDungText": "API <1s",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken < 1000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "API 1s - 3s",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken between 1000 and 3000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "API > 3s",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken > 3000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "Tổng số API",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%'",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "Tổng số lỗi(API 500)",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and sc-status = 500",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "API CheckHandy < 500 ms",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%CheckHandy%' and time-taken < 500",
+    "Type": "Number"
+  },
+
+  {
+    "NoiDungText": "Tổng SL API CheckHandy",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%CheckHandy%'",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "API SaveAdd Handy < 2000 ms",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%SaveAdd%' and time-taken < 2000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "Tổng SL API SaveAdd Handy",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%SaveAdd%'",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "Top 20 API chậm nhất",
+    "Query": "SELECT TOP 20 cs-uri-stem as URL, MAX(time-taken) As Max, MIN(time-taken) As Min, Avg(time-taken) As Average, Count(*) as Hits FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' GROUP BY URL ORDER By Average DESC",
+    "Type": "CSV"
+  },
+  {
+    "NoiDungText": "Top 20 API lỗi nhiều nhất",
+    "Query": "SELECT TOP 20 cs-uri-stem as URL, Count(*) as Hits FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and sc-status <> 200 GROUP BY URL ORDER By Hits DESC",
+    "Type": "CSV"
+  }
+]

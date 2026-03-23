@@ -1,0 +1,1 @@
+D:\ITG\WPF\PerformanceApp\performanceapp.client\obj\Debug\performanceapp.client.esproj.CoreCompileInputs.cache

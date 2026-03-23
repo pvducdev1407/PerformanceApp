@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+  <PropertyGroup>
+    <PackageJsonName Condition="$(PackageJsonName) == ''">tailadmin-react</PackageJsonName>
+    <PackageJsonPrivate Condition="$(PackageJsonPrivate) == ''">true</PackageJsonPrivate>
+    <PackageJsonVersion Condition="$(PackageJsonVersion) == ''">2.0.2</PackageJsonVersion>
+    <PackageJsonType Condition="$(PackageJsonType) == ''">module</PackageJsonType>
+    <PackageJsonScriptsDev Condition="$(PackageJsonScriptsDev) == ''">vite</PackageJsonScriptsDev>
+    <PackageJsonScriptsBuild Condition="$(PackageJsonScriptsBuild) == ''">tsc -b &amp;&amp; vite build</PackageJsonScriptsBuild>
+    <PackageJsonScriptsLint Condition="$(PackageJsonScriptsLint) == ''">eslint .</PackageJsonScriptsLint>
+    <PackageJsonScriptsPreview Condition="$(PackageJsonScriptsPreview) == ''">vite preview</PackageJsonScriptsPreview>
+    <PackageJsonDependenciesFullcalendarCore Condition="$(PackageJsonDependenciesFullcalendarCore) == ''">^6.1.15</PackageJsonDependenciesFullcalendarCore>
+    <PackageJsonDependenciesFullcalendarDaygrid Condition="$(PackageJsonDependenciesFullcalendarDaygrid) == ''">^6.1.15</PackageJsonDependenciesFullcalendarDaygrid>
+    <PackageJsonDependenciesFullcalendarInteraction Condition="$(PackageJsonDependenciesFullcalendarInteraction) == ''">^6.1.15</PackageJsonDependenciesFullcalendarInteraction>
+    <PackageJsonDependenciesFullcalendarList Condition="$(PackageJsonDependenciesFullcalendarList) == ''">^6.1.15</PackageJsonDependenciesFullcalendarList>
+    <PackageJsonDependenciesFullcalendarReact Condition="$(PackageJsonDependenciesFullcalendarReact) == ''">^6.1.15</PackageJsonDependenciesFullcalendarReact>
+    <PackageJsonDependenciesFullcalendarTimegrid Condition="$(PackageJsonDependenciesFullcalendarTimegrid) == ''">^6.1.15</PackageJsonDependenciesFullcalendarTimegrid>
+    <PackageJsonDependenciesReactJvectormapCore Condition="$(PackageJsonDependenciesReactJvectormapCore) == ''">^1.0.4</PackageJsonDependenciesReactJvectormapCore>
+    <PackageJsonDependenciesReactJvectormapWorld Condition="$(PackageJsonDependenciesReactJvectormapWorld) == ''">^1.1.2</PackageJsonDependenciesReactJvectormapWorld>
+    <PackageJsonDependenciesTypesReactToastify Condition="$(PackageJsonDependenciesTypesReactToastify) == ''">^4.0.2</PackageJsonDependenciesTypesReactToastify>
+    <PackageJsonDependenciesApexcharts Condition="$(PackageJsonDependenciesApexcharts) == ''">^4.1.0</PackageJsonDependenciesApexcharts>
+    <PackageJsonDependenciesAxios Condition="$(PackageJsonDependenciesAxios) == ''">^1.13.6</PackageJsonDependenciesAxios>
+    <PackageJsonDependenciesClsx Condition="$(PackageJsonDependenciesClsx) == ''">^2.1.1</PackageJsonDependenciesClsx>
+    <PackageJsonDependenciesFlatpickr Condition="$(PackageJsonDependenciesFlatpickr) == ''">^4.6.13</PackageJsonDependenciesFlatpickr>
+    <PackageJsonDependenciesReact Condition="$(PackageJsonDependenciesReact) == ''">^19.0.0</PackageJsonDependenciesReact>
+    <PackageJsonDependenciesReactApexcharts Condition="$(PackageJsonDependenciesReactApexcharts) == ''">^1.7.0</PackageJsonDependenciesReactApexcharts>
+    <PackageJsonDependenciesReactDnd Condition="$(PackageJsonDependenciesReactDnd) == ''">^16.0.1</PackageJsonDependenciesReactDnd>
+    <PackageJsonDependenciesReactDndHtml5Backend Condition="$(PackageJsonDependenciesReactDndHtml5Backend) == ''">^16.0.1</PackageJsonDependenciesReactDndHtml5Backend>
+    <PackageJsonDependenciesReactDom Condition="$(PackageJsonDependenciesReactDom) == ''">^19.0.0</PackageJsonDependenciesReactDom>
+    <PackageJsonDependenciesReactDropzone Condition="$(PackageJsonDependenciesReactDropzone) == ''">^14.3.5</PackageJsonDependenciesReactDropzone>
+    <PackageJsonDependenciesReactHelmetAsync Condition="$(PackageJsonDependenciesReactHelmetAsync) == ''">^2.0.5</PackageJsonDependenciesReactHelmetAsync>
+    <PackageJsonDependenciesReactRouter Condition="$(PackageJsonDependenciesReactRouter) == ''">^7.1.5</PackageJsonDependenciesReactRouter>
+    <PackageJsonDependenciesReactToastify Condition="$(PackageJsonDependenciesReactToastify) == ''">^11.0.5</PackageJsonDependenciesReactToastify>
+    <PackageJsonDependenciesSwiper Condition="$(PackageJsonDependenciesSwiper) == ''">^11.2.3</PackageJsonDependenciesSwiper>
+    <PackageJsonDependenciesTailwindMerge Condition="$(PackageJsonDependenciesTailwindMerge) == ''">^3.0.1</PackageJsonDependenciesTailwindMerge>
+    <PackageJsonDevdependenciesEslintJs Condition="$(PackageJsonDevdependenciesEslintJs) == ''">^9.19.0</PackageJsonDevdependenciesEslintJs>
+    <PackageJsonDevdependenciesTailwindcssPostcss Condition="$(PackageJsonDevdependenciesTailwindcssPostcss) == ''">^4.0.8</PackageJsonDevdependenciesTailwindcssPostcss>
+    <PackageJsonDevdependenciesTypesReact Condition="$(PackageJsonDevdependenciesTypesReact) == ''">^19.0.12</PackageJsonDevdependenciesTypesReact>
+    <PackageJsonDevdependenciesTypesReactDom Condition="$(PackageJsonDevdependenciesTypesReactDom) == ''">^19.0.4</PackageJsonDevdependenciesTypesReactDom>
+    <PackageJsonDevdependenciesVitejsPluginReact Condition="$(PackageJsonDevdependenciesVitejsPluginReact) == ''">^4.3.4</PackageJsonDevdependenciesVitejsPluginReact>
+    <PackageJsonDevdependenciesEslint Condition="$(PackageJsonDevdependenciesEslint) == ''">^9.19.0</PackageJsonDevdependenciesEslint>
+    <PackageJsonDevdependenciesEslintPluginReactHooks Condition="$(PackageJsonDevdependenciesEslintPluginReactHooks) == ''">^5.0.0</PackageJsonDevdependenciesEslintPluginReactHooks>
+    <PackageJsonDevdependenciesEslintPluginReactRefresh Condition="$(PackageJsonDevdependenciesEslintPluginReactRefresh) == ''">^0.4.18</PackageJsonDevdependenciesEslintPluginReactRefresh>
+    <PackageJsonDevdependenciesGlobals Condition="$(PackageJsonDevdependenciesGlobals) == ''">^15.14.0</PackageJsonDevdependenciesGlobals>
+    <PackageJsonDevdependenciesPostcss Condition="$(PackageJsonDevdependenciesPostcss) == ''">^8.5.2</PackageJsonDevdependenciesPostcss>
+    <PackageJsonDevdependenciesTailwindcss Condition="$(PackageJsonDevdependenciesTailwindcss) == ''">^4.0.8</PackageJsonDevdependenciesTailwindcss>
+    <PackageJsonDevdependenciesTypescript Condition="$(PackageJsonDevdependenciesTypescript) == ''">~5.7.2</PackageJsonDevdependenciesTypescript>
+    <PackageJsonDevdependenciesTypescriptEslint Condition="$(PackageJsonDevdependenciesTypescriptEslint) == ''">^8.22.0</PackageJsonDevdependenciesTypescriptEslint>
+    <PackageJsonDevdependenciesVite Condition="$(PackageJsonDevdependenciesVite) == ''">^6.4.1</PackageJsonDevdependenciesVite>
+    <PackageJsonDevdependenciesVitePluginSvgr Condition="$(PackageJsonDevdependenciesVitePluginSvgr) == ''">^4.3.0</PackageJsonDevdependenciesVitePluginSvgr>
+    <PackageJsonOverridesReactHelmetAsyncReact Condition="$(PackageJsonOverridesReactHelmetAsyncReact) == ''">^16.8.0 || ^17 || ^18 || ^19</PackageJsonOverridesReactHelmetAsyncReact>
+    <PackageJsonOverridesReactJvectormapCoreReact Condition="$(PackageJsonOverridesReactJvectormapCoreReact) == ''">^16.8.0 || ^17 || ^18 || ^19</PackageJsonOverridesReactJvectormapCoreReact>
+    <PackageJsonOverridesReactJvectormapCoreReactDom Condition="$(PackageJsonOverridesReactJvectormapCoreReactDom) == ''">^16.8.0 || ^17 || ^18 || ^19</PackageJsonOverridesReactJvectormapCoreReactDom>
+    <PackageJsonOverridesReactJvectormapWorldReact Condition="$(PackageJsonOverridesReactJvectormapWorldReact) == ''">^16.8.0 || ^17 || ^18 || ^19</PackageJsonOverridesReactJvectormapWorldReact>
+    <PackageJsonOverridesReactJvectormapWorldReactDom Condition="$(PackageJsonOverridesReactJvectormapWorldReactDom) == ''">^16.8.0 || ^17 || ^18 || ^19</PackageJsonOverridesReactJvectormapWorldReactDom>
+  </PropertyGroup>
+</Project>
