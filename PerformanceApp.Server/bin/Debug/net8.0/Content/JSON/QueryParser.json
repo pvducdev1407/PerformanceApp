@@ -1,12 +1,17 @@
 [
   {
-    "NoiDungText": "API nhanh dưới 1s",
+    "NoiDungText": "API <1s",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken < 1000",
     "Type": "Number"
   },
   {
-    "NoiDungText": "API từ 1s đến 3s",
+    "NoiDungText": "API 1s - 3s",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken between 1000 and 3000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "API > 3s",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken > 3000",
     "Type": "Number"
   },
   {
@@ -15,43 +20,29 @@
     "Type": "Number"
   },
   {
-    "NoiDungText": "API lỗi status 500",
+    "NoiDungText": "Tổng số lỗi(API 500)",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and sc-status = 500",
     "Type": "Number"
   },
   {
-    "NoiDungText": "API chậm trên 3s",
-    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%api%' and time-taken > 3000",
-    "Type": "Number"
-  },
-  {
-    "NoiDungText": "CheckHandy nhanh dưới 500ms",
+    "NoiDungText": "API CheckHandy < 500 ms",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%CheckHandy%' and time-taken < 500",
     "Type": "Number"
   },
+
   {
-    "NoiDungText": "HandyAPI SaveAdd nhanh dưới 2s",
-    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%SaveAdd%' and time-taken < 2000",
-    "Type": "Number"
-  },
-  {
-    "NoiDungText": "Tổng số request CheckHandy",
+    "NoiDungText": "Tổng SL API CheckHandy",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%CheckHandy%'",
     "Type": "Number"
   },
   {
-    "NoiDungText": "Tổng số request HandyAPI SaveAdd",
+    "NoiDungText": "API SaveAdd Handy < 2000 ms",
+    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%SaveAdd%' and time-taken < 2000",
+    "Type": "Number"
+  },
+  {
+    "NoiDungText": "Tổng SL API SaveAdd Handy",
     "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%SaveAdd%'",
-    "Type": "Number"
-  },
-  {
-    "NoiDungText": "Tổng số request HandyAPI GetInfoTem",
-    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%GetInfoTem%'",
-    "Type": "Number"
-  },
-  {
-    "NoiDungText": "HandyAPI GetInfoTem nhanh dưới 500ms",
-    "Query": "SELECT count(*) FROM '[LOGFILEPATH]' where cs-uri-stem like '%HandyAPI%' and cs-uri-stem like '%GetInfoTem%' and time-taken < 500",
     "Type": "Number"
   },
   {

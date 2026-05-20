@@ -48,16 +48,34 @@ namespace PerformanceApp.Server.Controllers
 
                 // chờ tất cả xong
                 await Task.WhenAll(tasks);
+                AppSettingsHelper.Set("LogParser:FolderPath", folder_path);
+                AppSettingsHelper.Set("LogParser:LogPath", url_path);
                 return Ok(new
                 {
                     success = true,
                     result = logQueryItems
                 });
+
+                
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+        }
+        [HttpGet]
+        public IActionResult GetInfomationLog()
+        {
+            return Ok(new
+            {
+                success = true,
+                result = new
+                {
+                    json_example = System.IO.File.ReadAllText("Content/JSON/QueryParser.json"),
+                    log_path = AppSettingsHelper.Get("LogParser:LogPath"),
+                    folder_path = AppSettingsHelper.Get("LogParser:FolderPath")
+                }
+            });
         }
         private string RunLogParser(string logParserPath, string query, string type, int timeoutMs = 120000)
         {

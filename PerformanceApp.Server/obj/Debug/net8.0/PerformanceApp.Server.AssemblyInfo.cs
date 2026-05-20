@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("PerformanceApp.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7192b39f730a5fca57362c860c2d8ad7742f4d9d")]
 [assembly: System.Reflection.AssemblyProductAttribute("PerformanceApp.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("PerformanceApp.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

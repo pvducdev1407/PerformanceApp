@@ -1,4 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import SignIn from "./pages/AuthPages/SignIn";
 import SignUp from "./pages/AuthPages/SignUp";
 import NotFound from "./pages/OtherPage/NotFound";
@@ -18,10 +20,30 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import JiraWorking from "./pages/JiraWorking";
+import JsonEditor from "./pages/JsonEditor";
 
 export default function App() {
   return (
     <>
+      <ToastContainer
+        position="top-center"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        style={{
+          zIndex: 99999,
+          position: "fixed",
+          top: "20px",
+          left: "50%",
+          transform: "translateX(-50%)",
+        }}
+      />
       <Router>
         <ScrollToTop />
         <Routes>
@@ -31,6 +53,8 @@ export default function App() {
 
             {/* Others Page */}
             <Route path="/profile" element={<UserProfiles />} />
+            <Route path="/jira" element={<JiraWorking />} />
+            <Route path="/json-editor" element={<JsonEditor />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
 

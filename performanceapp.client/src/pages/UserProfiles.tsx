@@ -6,7 +6,7 @@ import Input from "../components/form/input/InputField";
 import Button from "../components/ui/button/Button";
 import { BoxIcon } from "../icons";
 import CRUDServices from "../services/CRUDServices";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Notify from "../services/Notify";
 
 interface LogResultItem {
@@ -14,29 +14,50 @@ interface LogResultItem {
   type: "Number" | "CSV";
   queryResult: string;
 }
+interface InfomationLog {
+  json_example: string;
+  folder_path: string;
+  log_path: string;
+}
 
 export default function UserProfiles() {
-  const [viewLogObject, setViewLogObject] = useState({
-    url_path: "C:\\Program Files (x86)\\Log Parser 2.2\\LogParser.exe",
-    folder_path: "D:\\ITG\\LOG",
-  });
   const [logResults, setLogResults] = useState<LogResultItem[]>([]);
+  const [viewLogObject, setViewLogObject] = useState<InfomationLog>({
+    json_example: "",
+    folder_path: "",
+    log_path: "",
+  });
   const [clickSave, setclickSave] = useState(false);
   const options = [
     { value: "VIETTRAN", label: "Việt Trần" },
     { value: "DOTHANH", label: "Đô Thành" },
     { value: "MEDITEC", label: "Meditec" },
   ];
+
+  useEffect(() => {
+    const Init = async () => {
+      const resultResponse = await CRUDServices.getData(
+        "/LogParser/GetInfomationLog",
+        {},
+      );
+
+      if (resultResponse) {
+        setViewLogObject(resultResponse.result as InfomationLog);
+      }
+    };
+
+    Init();
+  }, []);
   const handleSelectChange = async (value: string) => {};
   const ViewLog = async () => {
     setclickSave(true);
     const response = await CRUDServices.getData("/LogParser/GetLog", {
-      url_path: viewLogObject.url_path,
+      url_path: viewLogObject.log_path,
       folder_path: viewLogObject.folder_path,
     });
     if (response) {
       // Ép kiểu cho TypeScript
-      Notify.Success("Đăng nhập thành công");
+      Notify.Success("Thống kê thành công");
       setclickSave(false);
       setLogResults(response.result as LogResultItem[]);
     } else {
@@ -110,8 +131,8 @@ export default function UserProfiles() {
             <Input
               type="text"
               id="input"
-              value={viewLogObject.url_path}
-              name="url_path"
+              value={viewLogObject.log_path}
+              name="log_path"
               onChange={handleChange}
             />
           </div>

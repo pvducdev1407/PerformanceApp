@@ -37,6 +37,16 @@ const navItems: NavItem[] = [
     path: "/profile",
   },
   {
+    icon: <UserCircleIcon />,
+    name: "Working Jira",
+    path: "/jira",
+  },
+  {
+    icon: <BoxCubeIcon />,
+    name: "JSON Editor",
+    path: "/json-editor",
+  },
+  {
     icon: <CalenderIcon />,
     name: "Calendar",
     path: "/calendar",

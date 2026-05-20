@@ -38,3 +38,5 @@ D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\obj\Debug\net8.0\PerformanceApp.
 D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\obj\Debug\net8.0\PerformanceApp.Server.genruntimeconfig.cache
 D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\obj\Debug\net8.0\ref\PerformanceApp.Server.dll
 D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\bin\Debug\net8.0\Content\JSON\QueryParser.json
+D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\obj\Debug\net8.0\PerformanceApp.Server.sourcelink.json
+D:\ITG\WPF\PerformanceApp\PerformanceApp.Server\bin\Debug\net8.0\Newtonsoft.Json.dll
