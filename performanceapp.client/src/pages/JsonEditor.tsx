@@ -2,10 +2,7 @@ import { useState, useMemo, useRef, useEffect } from "react";
 import PageMeta from "../components/common/PageMeta";
 import Button from "../components/ui/button/Button";
 
-const defaultJson = `{
-  "name": "PerformanceApp JSON Editor",
-  "version": "1.0.0"
-}`;
+const defaultJson = ``;
 
 export default function JsonEditor() {
   const [rawJson, setRawJson] = useState<string>(defaultJson);
@@ -16,8 +13,6 @@ export default function JsonEditor() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchIndex, setSearchIndex] = useState<number>(0);
   const [matchedPaths, setMatchedPaths] = useState<string[]>([]);
-  const [matchOffsets, setMatchOffsets] = useState<number[]>([]);
-  const [offsetIndex, setOffsetIndex] = useState<number>(0);
 
   const editorRef = useRef<HTMLTextAreaElement | null>(null);
   const lineNumberRef = useRef<HTMLDivElement | null>(null);
@@ -26,6 +21,10 @@ export default function JsonEditor() {
 
   const parsedData = useMemo(() => {
     try {
+      if (!rawJson.trim()) {
+        setError("");
+        return null;
+      }
       const parsed = JSON.parse(rawJson);
       setError("");
       return parsed;
@@ -82,27 +81,6 @@ export default function JsonEditor() {
     setMatchedPaths(paths);
     setSearchIndex(0);
   }, [searchQuery, parsedData]);
-
-  // Compute raw-json text match offsets for cursor jumps (Ctrl+F then Enter)
-  useEffect(() => {
-    if (!searchQuery) {
-      setMatchOffsets([]);
-      setOffsetIndex(0);
-      return;
-    }
-
-    const raw = rawJson || "";
-    const lower = raw.toLowerCase();
-    const q = searchQuery.toLowerCase();
-    const offsets: number[] = [];
-    let idx = lower.indexOf(q, 0);
-    while (idx !== -1) {
-      offsets.push(idx);
-      idx = lower.indexOf(q, idx + Math.max(1, q.length));
-    }
-    setMatchOffsets(offsets);
-    setOffsetIndex(0);
-  }, [searchQuery, rawJson]);
 
   // Expand path when F3 is pressed
   useEffect(() => {
@@ -164,26 +142,6 @@ export default function JsonEditor() {
     });
   };
 
-  const jumpToOffset = (index: number) => {
-    if (!editorRef.current || matchOffsets.length === 0 || !searchQuery) return;
-    const start = matchOffsets[index];
-    const end = start + searchQuery.length;
-    const editor = editorRef.current;
-    editor.focus();
-    try {
-      editor.setSelectionRange(start, end);
-    } catch (err) {
-      // ignore if not supported
-    }
-
-    const before = rawJson.slice(0, start);
-    const lineNumber = before.split("\n").length - 1;
-    const style = getComputedStyle(editor);
-    const lh = parseFloat(style.lineHeight || "16");
-    editor.scrollTop = Math.max(0, lineNumber * lh - editor.clientHeight / 2);
-    setOffsetIndex(index);
-  };
-
   const syncScroll = () => {
     if (editorRef.current && lineNumberRef.current) {
       lineNumberRef.current.scrollTop = editorRef.current.scrollTop;
@@ -194,6 +152,33 @@ export default function JsonEditor() {
     setRawJson(value);
   };
 
+  const parseQueryString = (query: string) => {
+    const result: Record<string, string | string[]> = {};
+    const parts = query
+      .trim()
+      .replace(/^[^?]*\?/, "")
+      .split(/[&;]/)
+      .filter(Boolean);
+
+    for (const part of parts) {
+      const [rawKey, ...rawValueParts] = part.split("=");
+      if (!rawKey) continue;
+      const key = decodeURIComponent(rawKey.replace(/\+/g, " ") || "");
+      const value = decodeURIComponent(rawValueParts.join("=").replace(/\+/g, " ") || "");
+
+      if (key in result) {
+        const existing = result[key];
+        result[key] = Array.isArray(existing)
+          ? [...existing, value]
+          : [existing, value];
+      } else {
+        result[key] = value;
+      }
+    }
+
+    return result;
+  };
+
   const parseIISRequest = (log: string) => {
     setIisParseError("");
     if (!log || !log.trim()) {
@@ -201,30 +186,45 @@ export default function JsonEditor() {
       return;
     }
 
-    // Try to find URL-encoded JSON blobs like %7B...%7D or key=...pattern
-    const urlEncodedMatch = log.match(/(?:searchDynamic=)?(%7B[\s\S]*?%7D)/i);
-    const rawMatch = log.match(/(?:searchDynamic=)?(\{[\s\S]*?\})/i);
+    const extractSearchDynamicValue = (text: string) => {
+      const encodedMatch = text.match(/searchDynamic=([^\s&;]+)/i);
+      if (encodedMatch && encodedMatch[1]) {
+        return decodeURIComponent(encodedMatch[1]);
+      }
+      const rawMatch = text.match(/searchDynamic=(\{[\s\S]*\})/i);
+      return rawMatch?.[1] ?? null;
+    };
 
     let jsonText: string | null = null;
     try {
-      if (urlEncodedMatch && urlEncodedMatch[1]) {
-        jsonText = decodeURIComponent(urlEncodedMatch[1]);
-      } else if (rawMatch && rawMatch[1]) {
-        jsonText = rawMatch[1];
+      const searchDynamicPayload = extractSearchDynamicValue(log);
+      if (searchDynamicPayload) {
+        jsonText = searchDynamicPayload;
       } else {
-        // fallback: try to find first {...} block
+        const rawQuery = log.includes("?")
+          ? log.slice(log.indexOf("?") + 1)
+          : log;
+        const queryString = rawQuery.split(/\s+/)[0];
+        const parsedQuery = parseQueryString(queryString);
+        const parsedKeys = Object.keys(parsedQuery);
+
+        if (parsedKeys.length > 0) {
+          setRawJson(JSON.stringify(parsedQuery, null, 2));
+          setIisParseError("");
+          return;
+        }
+
         const braceMatch = log.match(/(\{[\s\S]*\})/);
         if (braceMatch && braceMatch[1]) jsonText = braceMatch[1];
       }
 
-      if (!jsonText) {
-        setIisParseError("Không tìm thấy JSON trong log");
-        return;
+      if (jsonText) {
+        const parsed = JSON.parse(jsonText);
+        setRawJson(JSON.stringify(parsed, null, 2));
+        setIisParseError("");
+      } else {
+        setIisParseError("Không tìm thấy JSON hoặc query string hợp lệ trong log");
       }
-
-      const parsed = JSON.parse(jsonText);
-      setRawJson(JSON.stringify(parsed, null, 2));
-      setIisParseError("");
     } catch (err: any) {
       setIisParseError(err?.message || "Lỗi khi parse JSON");
     }
@@ -237,8 +237,6 @@ export default function JsonEditor() {
     setMatchedPaths([]);
     setSearchIndex(0);
     setIisParseError("");
-    setMatchOffsets([]);
-    setOffsetIndex(0);
   };
 
   const toggleCollapse = (path: string) => {
@@ -253,10 +251,6 @@ export default function JsonEditor() {
     });
   };
 
-  const isMatchingPath = (path: string): boolean => {
-    return matchedPaths.includes(path);
-  };
-
   const isCurrentMatch = (path: string): boolean => {
     return matchedPaths[searchIndex] === path;
   };
@@ -269,7 +263,6 @@ export default function JsonEditor() {
     const isArray = Array.isArray(value);
     const isObject = value !== null && typeof value === "object" && !isArray;
     const isCollapsed = collapsedPaths.has(path);
-    const isMatching = isMatchingPath(path);
     const isCurrentHighlight = isCurrentMatch(path);
 
     if (isArray || isObject) {
@@ -510,6 +503,7 @@ export default function JsonEditor() {
             )}
           </div>
         </div>
+
       </div>
     </>
   );

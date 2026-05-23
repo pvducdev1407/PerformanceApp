@@ -48,7 +48,7 @@ export default function UserProfiles() {
 
     Init();
   }, []);
-  const handleSelectChange = async (value: string) => {};
+  const handleSelectChange = async (_value: string) => {};
   const ViewLog = async () => {
     setclickSave(true);
     const response = await CRUDServices.getData("/LogParser/GetLog", {

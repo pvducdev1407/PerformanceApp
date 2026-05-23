@@ -22,6 +22,8 @@ import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
 import JiraWorking from "./pages/JiraWorking";
 import JsonEditor from "./pages/JsonEditor";
+import LinkManager from "./pages/LinkManager";
+import FrequentlyUsed from "./pages/OtherPage/FrequentlyUsed";
 
 export default function App() {
   return (
@@ -55,6 +57,8 @@ export default function App() {
             <Route path="/profile" element={<UserProfiles />} />
             <Route path="/jira" element={<JiraWorking />} />
             <Route path="/json-editor" element={<JsonEditor />} />
+            <Route path="/link-manager" element={<LinkManager />} />
+            <Route path="/frequent-apps" element={<FrequentlyUsed />} />
             <Route path="/calendar" element={<Calendar />} />
             <Route path="/blank" element={<Blank />} />
 

@@ -10,13 +10,10 @@ import {
   HorizontaLDots,
   ListIcon,
   PageIcon,
-  PieChartIcon,
-  PlugInIcon,
   TableIcon,
   UserCircleIcon,
 } from "../icons";
 import { useSidebar } from "../context/SidebarContext";
-import SidebarWidget from "./SidebarWidget";
 
 type NavItem = {
   name: string;
@@ -45,6 +42,16 @@ const navItems: NavItem[] = [
     icon: <BoxCubeIcon />,
     name: "JSON Editor",
     path: "/json-editor",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Link Manager",
+    path: "/link-manager",
+  },
+  {
+    icon: <PageIcon />,
+    name: "Phần mềm hay dùng",
+    path: "/frequent-apps",
   },
   {
     icon: <CalenderIcon />,
@@ -267,83 +274,66 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside
-      className={`fixed mt-16 flex flex-col lg:mt-0 top-0 px-5 left-0 bg-white dark:bg-gray-900 dark:border-gray-800 text-gray-900 h-screen transition-all duration-300 ease-in-out z-50 border-r border-gray-200 
-        ${
-          isExpanded || isMobileOpen
-            ? "w-[290px]"
-            : isHovered
-              ? "w-[290px]"
-              : "w-[90px]"
-        }
-        ${isMobileOpen ? "translate-x-0" : "-translate-x-full"}
-        lg:translate-x-0`}
+      className={`fixed top-0 left-0 z-50 flex h-screen flex-col border-r border-slate-200/80 bg-white/95 shadow-sm transition-all duration-300 ease-in-out dark:border-slate-800 dark:bg-slate-950/95 ${
+        isExpanded || isMobileOpen ? "w-[290px]" : isHovered ? "w-[290px]" : "w-[90px]"
+      } ${isMobileOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0`}
       onMouseEnter={() => !isExpanded && setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      <div
-        className={`py-8 flex ${
-          !isExpanded && !isHovered ? "lg:justify-center" : "justify-center"
-        }`}
-      >
-        <Link to="/">
-          {isExpanded || isHovered || isMobileOpen ? (
-            <>
-              <img
-                className="dark:hidden"
-                src="/images/logo/logo_login.png"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-              <img
-                className="hidden dark:block"
-                src="/images/logo/logo_login.png"
-                alt="Logo"
-                width={150}
-                height={40}
-              />
-            </>
-          ) : (
+      <div className={`flex items-center gap-3 px-5 ${!isExpanded && !isHovered ? "justify-center" : "justify-start"} py-6`}>
+        <Link to="/" className="flex items-center gap-3">
+          <div className="grid h-11 w-11 place-items-center rounded-2xl bg-slate-100 text-slate-700 shadow-sm dark:bg-slate-900 dark:text-slate-200">
             <img
               src="/images/logo/logo_title.png"
               alt="Logo"
-              width={32}
-              height={32}
+              className="h-6 w-6"
             />
+          </div>
+          {(isExpanded || isHovered || isMobileOpen) && (
+            <div className="space-y-1">
+              <p className="text-sm font-semibold text-slate-900 dark:text-white">Performance App</p>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Work dashboard</p>
+            </div>
           )}
         </Link>
       </div>
-      <div className="flex flex-col overflow-y-auto duration-300 ease-linear no-scrollbar">
+
+      <div className="flex-1 overflow-y-auto px-3 pb-6 no-scrollbar">
         <nav className="mb-6">
           <div className="flex flex-col gap-4">
             <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
+                className={`mb-4 text-xs uppercase tracking-[0.3em] text-slate-400 ${
+                  !isExpanded && !isHovered ? "justify-center" : "justify-start"
+                } flex leading-[20px]`}
               >
-                {isExpanded || isHovered || isMobileOpen ? (
-                  "Menu"
-                ) : (
-                  <HorizontaLDots className="size-6" />
-                )}
+                {isExpanded || isHovered || isMobileOpen ? "Menu" : <HorizontaLDots className="size-6" />}
               </h2>
               {renderMenuItems(navItems, "main")}
             </div>
-            <div className="">
+            <div>
               <h2
-                className={`mb-4 text-xs uppercase flex leading-[20px] text-gray-400 ${
-                  !isExpanded && !isHovered
-                    ? "lg:justify-center"
-                    : "justify-start"
-                }`}
+                className={`mb-4 text-xs uppercase tracking-[0.3em] text-slate-400 ${
+                  !isExpanded && !isHovered ? "justify-center" : "justify-start"
+                } flex leading-[20px]`}
               ></h2>
               {renderMenuItems(othersItems, "others")}
             </div>
           </div>
         </nav>
+      </div>
+
+      <div className="border-t border-slate-200/80 px-5 py-4 text-sm text-slate-600 dark:border-slate-800 dark:text-slate-400">
+        {(isExpanded || isHovered || isMobileOpen) ? (
+          <>
+            <p className="font-semibold text-slate-900 dark:text-white">Quick actions</p>
+            <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">Tìm nhanh trang và cấu hình</p>
+          </>
+        ) : (
+          <div className="flex justify-center">
+            <span className="inline-flex h-2.5 w-2.5 rounded-full bg-sky-500" />
+          </div>
+        )}
       </div>
     </aside>
   );

@@ -148,6 +148,85 @@ class JiraApiService {
       throw new Error(error.response?.data?.message || 'Failed to search issues');
     }
   }
+
+  // Call HR API for Jira detail report through backend proxy
+  async getHRJiraDetailReport(
+    dfrom: string,
+    dto: string,
+    ma_nv?: string,
+    ma_dvcs: string = '01',
+    ma_bp: string = '06',
+    leader_id: string = '0612'
+  ): Promise<any> {
+    try {
+      // First, try to call through backend proxy if available
+      const backendPort = localStorage.getItem('backendPort') || '5178';
+      const backendProxyUrl = `http://localhost:${backendPort}/api/HR/JiraDetailReport`;
+      
+      const payload = {
+        searchDynamic: {
+          ma_dvcs,
+          ma_bp,
+          leader_id,
+          project: '',
+          dfrom,
+          dto,
+          ma_nv: ma_nv || '',
+          ma_qtda: '',
+          group_by: 'dev',
+          status: '',
+          devdfrom: '1900/01/01',
+          devdto: '1900/01/01',
+          dfrom_request: '1900/01/01',
+          dto_request: '1900/01/01',
+          mau_bc: '001',
+          gridid: 'BCChiTietCVJira',
+          culture: 'vi-VN'
+        }
+      };
+
+      console.log('Calling HR API with payload:', payload);
+      
+      try {
+        // Try backend proxy first
+        const proxyResponse = await axios.post(backendProxyUrl, payload, {
+          timeout: 30000
+        });
+        console.log('HR API Response (via proxy):', proxyResponse.data);
+        
+        if (proxyResponse.data.Success !== false && proxyResponse.data.Result) {
+          return proxyResponse.data.Result || [];
+        }
+      } catch (proxyError: any) {
+        console.warn('Backend proxy not available, trying direct API call:', proxyError.message);
+        
+        // Fallback to direct API call if proxy fails
+        const hrApiUrl = 'https://support.itgtechnology.vn:991/HRAPI/api/Reports/BCChiTietCVJiraAPI/GetData';
+        const token = '66e61a90-cec4-4c55-9b44-1fe3fb708730-0mR47teWNy8OhsBuKtoteBT88EcrTksqTaC6O6gros4T9CvdQ6eoVwI2YaqVZncbZlxZObCRVZrJ7ao0hzCJxpY65M';
+        
+        const directResponse = await axios.post(hrApiUrl, payload, {
+          headers: {
+            token,
+            'Content-Type': 'application/json'
+          },
+          timeout: 30000
+        });
+        console.log('HR API Response (direct):', directResponse.data);
+        
+        if (!directResponse.data.Success) {
+          throw new Error(directResponse.data.Error || 'API returned Success: false');
+        }
+        
+        return directResponse.data.Result || [];
+      }
+      
+      return [];
+    } catch (error: any) {
+      console.error('HR API Error:', error);
+      const errorMessage = error.response?.data?.Error || error.message || 'Failed to fetch HR report';
+      throw new Error(errorMessage);
+    }
+  }
 }
 
 export default new JiraApiService();
